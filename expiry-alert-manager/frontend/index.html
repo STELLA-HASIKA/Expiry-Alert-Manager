@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Track expiry dates, catch items before they expire, and reduce waste.">
+  <meta name="theme-color" content="#142d2a">
+  <title>Expiry Alert Manager</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <nav class="navbar" aria-label="Main navigation">
+      <a class="brand" href="#" aria-label="Expiry Alert Manager home"><span class="brand-mark">✳</span><span>expiry<span class="brand-light">mate</span></span></a>
+      <div class="nav-right"><span class="status-dot"></span><span class="nav-status">Your inventory, in control</span><a href="#inventory" class="nav-link">Inventory <span aria-hidden="true">↗</span></a></div>
+    </nav>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="eyebrow-icon">✦</span> LESS WASTE, MORE AWARENESS</div>
+          <h1>Know what expires.<br><span>Use it in time.</span></h1>
+          <p class="hero-description">One calm place to track the things you own, spot what needs attention, and keep good products from going to waste.</p>
+          <a href="#inventory" class="button button-dark hero-cta">Explore your inventory <span>↓</span></a>
+          <div class="hero-footnote"><span class="tiny-check">✓</span> Simple tracking for everyday life</div>
+        </div>
+        <div class="hero-visual" aria-label="Illustration of expiry tracking dashboard">
+          <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+          <div class="visual-leaf leaf-one">✳</div><div class="visual-leaf leaf-two">✦</div>
+          <div class="visual-card">
+            <div class="visual-card-top"><span class="mini-label">YOUR INVENTORY</span><span class="live-pill"><span></span> LIVE OVERVIEW</span></div>
+            <div class="visual-number">Stay one step <span>ahead.</span></div>
+            <div class="visual-items">
+              <div class="visual-item"><span class="product-emoji green">🥬</span><div><strong>Fresh produce</strong><small>Kitchen · Food</small></div><span class="days-badge soon">2 days</span></div>
+              <div class="visual-item"><span class="product-emoji peach">🧴</span><div><strong>Daily essentials</strong><small>Personal care</small></div><span class="days-badge safe">12 days</span></div>
+              <div class="visual-item"><span class="product-emoji lavender">💊</span><div><strong>Health supplies</strong><small>Medicine · Check dates</small></div><span class="days-badge safe">30 days</span></div>
+            </div>
+            <div class="visual-card-bottom"><span class="progress-label">A little awareness goes a long way</span><span class="progress-dots">● ● ●</span></div>
+          </div>
+          <div class="floating-note"><span>♧</span><div><strong>Waste less.</strong><small>Make every item count.</small></div></div>
+        </div>
+      </section>
+
+      <section class="stats-grid" aria-label="Inventory summary">
+        <article class="stat-card stat-total"><div class="stat-top"><span>Total products</span><span class="stat-icon">▦</span></div><div id="stat-total" class="stat-value">—</div><div class="stat-caption">Items you're keeping track of</div></article>
+        <article class="stat-card"><div class="stat-top"><span>Expiring soon</span><span class="stat-icon icon-amber">◷</span></div><div id="stat-soon" class="stat-value">—</div><div class="stat-caption">Within the next 7 days</div></article>
+        <article class="stat-card"><div class="stat-top"><span>Expired</span><span class="stat-icon icon-rose">!</span></div><div id="stat-expired" class="stat-value">—</div><div class="stat-caption">Past their expiry date</div></article>
+        <article class="stat-card"><div class="stat-top"><span>Categories</span><span class="stat-icon icon-green">◇</span></div><div id="stat-categories" class="stat-value">—</div><div class="stat-caption">Different types of products</div></article>
+      </section>
+
+      <section class="inventory-section" id="inventory">
+        <div class="section-heading"><div><div class="eyebrow">THE EVERYDAY CHECK-IN</div><h2>Your inventory</h2><p>Keep your products organised and catch expiry dates early.</p></div><button id="add-product-btn" class="button button-green"><span>＋</span> Add a product</button></div>
+        <div id="alert-banner" class="alert-banner hidden" role="status"></div>
+        <div class="toolbar">
+          <label class="search-box"><span aria-hidden="true">⌕</span><input id="search-input" type="search" placeholder="Search products..." aria-label="Search products"></label>
+          <label class="filter-label"><span>Category</span><select id="category-filter" aria-label="Filter by category"><option value="">All categories</option><option>Food</option><option>Medicine</option><option>Personal Care</option><option>Household</option><option>Other</option></select></label>
+          <label class="filter-label"><span>Status</span><select id="status-filter" aria-label="Filter by expiry status"><option value="">All statuses</option><option value="safe">Not urgent</option><option value="soon">Expiring soon</option><option value="expired">Expired</option></select></label>
+          <button id="clear-filters" class="text-button">Clear filters</button>
+        </div>
+        <div class="inventory-meta"><span id="result-count">Loading products…</span><span class="sort-label">Sorted by <strong>expiry date ↑</strong></span></div>
+        <div id="product-list" class="product-grid" aria-live="polite">
+          <div class="loading-state"><span class="spinner"></span><p>Loading your inventory…</p></div>
+        </div>
+        <div id="empty-state" class="empty-state hidden"><div class="empty-icon">✳</div><h3 id="empty-title">A fresh start.</h3><p id="empty-message">Add your first product to start tracking expiry dates.</p><button id="empty-add-btn" class="button button-green">＋ Add your first product</button></div>
+      </section>
+
+      <section class="how-section">
+        <div class="how-heading"><div class="eyebrow">SMALL STEPS, REAL IMPACT</div><h2>Good habits start with <span>awareness.</span></h2></div>
+        <div class="how-grid"><article><span class="how-number">01</span><div class="how-icon">＋</div><h3>Add what matters</h3><p>Record products across food, medicine, personal care and more.</p></article><article><span class="how-number">02</span><div class="how-icon">◷</div><h3>Know what's next</h3><p>Expiry labels help you prioritise what needs attention first.</p></article><article><span class="how-number">03</span><div class="how-icon">♧</div><h3>Make it count</h3><p>Use products responsibly and reduce avoidable waste.</p></article></div>
+      </section>
+    </main>
+    <footer><a class="brand footer-brand" href="#"><span class="brand-mark">✳</span><span>expiry<span class="brand-light">mate</span></span></a><span>Built for more mindful everyday living.</span><span>Expiry Alert Manager · Student Project</span></footer>
+  </div>
+
+  <dialog id="product-dialog" class="product-dialog">
+    <form id="product-form" novalidate>
+      <div class="dialog-heading"><div><div class="eyebrow" id="dialog-eyebrow">YOUR INVENTORY</div><h2 id="dialog-title">Add a product</h2></div><button type="button" id="close-dialog" class="icon-button" aria-label="Close form">×</button></div>
+      <p class="dialog-description">A few details are all it takes to stay one step ahead.</p>
+      <input type="hidden" id="product-id">
+      <label class="field-label" for="product-name">Product name <span>*</span></label><input class="form-control" id="product-name" name="name" maxlength="100" required placeholder="e.g. Oat milk">
+      <div class="form-row"><div><label class="field-label" for="product-category">Category <span>*</span></label><select class="form-control" id="product-category" name="category" required><option value="">Choose category</option><option>Food</option><option>Medicine</option><option>Personal Care</option><option>Household</option><option>Other</option></select></div><div><label class="field-label" for="product-quantity">Quantity <span>*</span></label><input class="form-control" id="product-quantity" name="quantity" type="number" min="1" max="99999" step="1" required value="1"></div></div>
+      <label class="field-label" for="product-expiry">Expiry date <span>*</span></label><input class="form-control" id="product-expiry" name="expiry_date" type="date" required>
+      <label class="field-label" for="product-notes">Notes <span class="optional">(optional)</span></label><textarea class="form-control" id="product-notes" name="notes" rows="3" maxlength="500" placeholder="Storage location or anything useful…"></textarea>
+      <div id="form-error" class="form-message error-message hidden" role="alert"></div>
+      <div class="dialog-actions"><button type="button" id="cancel-dialog" class="button button-outline">Cancel</button><button type="submit" id="save-product-btn" class="button button-green"><span>✓</span> Save product</button></div>
+    </form>
+  </dialog>
+  <div id="toast-region" class="toast-region" aria-live="polite" aria-atomic="true"></div>
+  <footer class="mobile-footer-note">Expiry dates are reminders, not a guarantee of product safety. Always check product labels and use your judgement.</footer>
+</body>
+</html>
